@@ -52,7 +52,7 @@ app.post('/ai_action', function (req, res) {
                 console.log("Error starting " + effect + " ("+JSON.stringify(args)+"): " + error);
                 return res.status(500).send(error);
             }
-            response = JSON.stringify({speech: data['result'], displayText: data['result']});
+            response = JSON.stringify({fulfillmentText: data['result']});
             res.send(response);
         })
     }
