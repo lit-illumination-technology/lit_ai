@@ -28,8 +28,8 @@ app.listen(port, () => console.log(`LIT AI listening on port ${port}!`));;
 app.get('/', (req, res) =>  res.send("HI"));
 app.post('/ai_action', function (req, res) {
     json = req.body;
-    action = json['result']['action'];
-    data = json['result']['parameters'];
+    action = json['queryResult']['action'];
+    data = json['queryResult']['parameters'];
     if (action == 'Lights') {
         effect = data['effect'];
         args = data;
@@ -49,6 +49,7 @@ app.post('/ai_action', function (req, res) {
         console.log("Starting " + effect + " ("+JSON.stringify(args)+")");
         lit.start(effect, args, function(data, error) {
             if(error) {
+                console.log("Error starting " + effect + " ("+JSON.stringify(args)+"): " + error);
                 return res.status(500).send(error);
             }
             response = JSON.stringify({speech: data['result'], displayText: data['result']});
