@@ -33,6 +33,7 @@ app.post('/ai_action', function (req, res) {
     if (action == 'Lights') {
         effect = data['effect'];
         args = data;
+        Object.keys(args).forEach(function(x){ if(!args[x]){delete args[x]}})
         delete args.effect;
         if(args.range) {
             args['ranges'] = [args.range];
@@ -47,7 +48,7 @@ app.post('/ai_action', function (req, res) {
             i++;
         }
         console.log("Starting " + effect + " ("+JSON.stringify(args)+")");
-        lit.start(effect, args, function(data, error) {
+        lit.start_effect(effect, args, function(data, error) {
             if(error) {
                 console.log("Error starting " + effect + " ("+JSON.stringify(args)+"): " + error);
                 return res.status(500).send(error);
